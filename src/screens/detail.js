@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getDetail } from './services/Api'
+import { getDetailProducts, getDetail } from './services/Api'
 import { useParams } from 'react-router-dom'
 
 export default function Detail() {
