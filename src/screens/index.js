@@ -11,6 +11,7 @@ import Slide from './layout/slide'
 import Sidebar from './layout/sidebar'
 import Product from './product'
 import Footer from './layout/footer'
+import Detail from './detail'
 
 
 export default function AppContainer() {
@@ -24,7 +25,8 @@ export default function AppContainer() {
             <div id="main" class="col-lg-8 col-md-12 col-sm-12">
               <Slide />
               <Switch>
-                <Route path="/" component={Product} />
+                <Route exact path="/" component={Product} />
+                <Route path="/product/:productId" component={Detail} />
               </Switch>
             </div>
             <Sidebar />

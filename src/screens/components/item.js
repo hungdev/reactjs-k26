@@ -1,12 +1,15 @@
 import React from 'react'
 import { processImage } from '../utils/index'
-export default function item(props) {
+import { Link } from 'react-router-dom'
+export default function Item(props) {
   return (
     <div class="product-item card text-center">
-      <a href="#">
+      <Link to={`/product/${props.data._id}`}>
         <img src={processImage(props.data.image)} alt='' />
-      </a>
-      <h4><a href="#">{props.data.name}</a></h4>
+      </Link>
+      <h4>
+        <Link to={`/product/${props.data._id}`}>{props.data.name}</Link>
+      </h4>
       <p>Giá Bán: <span>{props.data.price}</span></p>
     </div>
   )
