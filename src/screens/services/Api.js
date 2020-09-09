@@ -16,11 +16,7 @@ export function getProducts(params) {
 
 export const getDetailProducts = (productId) => api.get(`/product/${productId}`);
 
-// export function getDetail(productId) {
-//   console.log('ddddd', productId)
-//   return api.get(`/​product​/${productId}`)
-// }
-export const getDetail = (productId) => api.get(`/​product​/${productId}`)
+// export const getDetail = (productId) => api.get(`/​product​/${productId}`)
 
 export function getCategory() {
   return api.get('/get-categories')

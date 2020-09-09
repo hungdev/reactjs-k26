@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { getDetailProducts, getDetail } from './services/Api'
+import { getDetailProducts } from './services/Api'
 import { useParams } from 'react-router-dom'
+import { processImage } from './utils';
 
 export default function Detail() {
   const [detail, setDetail] = useState([]);
@@ -11,7 +12,7 @@ export default function Detail() {
   useEffect(() => {
     async function fetchData() {
       console.log('params.productId', params.productId)
-      const result = await getDetail(params.productId);
+      const result = await getDetailProducts(params.productId);
       setDetail(result.data.data)
       // setIsLoading(true)
       // console.log('result', result)
@@ -23,21 +24,20 @@ export default function Detail() {
 
   return (
     <div id="product">
-      hello
-      {/* <div id="product-head" class="row">
+      <div id="product-head" class="row">
         <div id="product-img" class="col-lg-6 col-md-6 col-sm-12">
-          <img src={getImageUrl(product)} alt='product' />
+          <img src={processImage(detail.image)} alt='product' />
         </div>
         <div id="product-details" class="col-lg-6 col-md-6 col-sm-12">
-          <h1>{product && product.name}</h1>
+          <h1>{detail && detail.name}</h1>
           <ul>
             <li><span>Bảo hành:</span> 12 Tháng</li>
-            <li><span>Đi kèm:</span> {product && product.accessories}</li>
-            <li><span>Tình trạng:</span> {product && product.status}</li>
-            <li><span>Khuyến Mại:</span> {product && product.accessories}</li>
+            <li><span>Đi kèm:</span> {detail && detail.accessories}</li>
+            <li><span>Tình trạng:</span> {detail && detail.status}</li>
+            <li><span>Khuyến Mại:</span> {detail && detail.accessories}</li>
             <li id="price">Giá Bán (chưa bao gồm VAT)</li>
-            <li id="price-number">{Intl.NumberFormat('vn-VN').format(product && product.price)}đ</li>
-            <li id="status">{isStock}</li>
+            <li id="price-number">{Intl.NumberFormat('vn-VN').format(detail && detail.price)}đ</li>
+            {/* <li id="status">{isStock}</li> */}
           </ul>
           <div id="add-cart">
             <a href="#" onClick={() => { }}>
@@ -48,9 +48,9 @@ export default function Detail() {
       </div>
       <div id="product-body" class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">
-          <h3>{product && product.name}</h3>
+          <h3>{detail && detail.name}</h3>
           <p>
-            {product && product.details}
+            {detail && detail.details}
           </p>
         </div>
       </div>
@@ -65,7 +65,7 @@ export default function Detail() {
                 name="name"
                 required type="text"
                 class="form-control"
-                value={formData.name}
+                value={'formData.name'}
                 onChange={(e) => this.onInputChange(e, 'name')}
               />
             </div>
@@ -75,7 +75,7 @@ export default function Detail() {
                 name="email"
                 required type="email"
                 class="form-control"
-                value={formData.email}
+                value={'formData.email'}
                 onChange={(e) => this.onInputChange(e, 'email')}
               />
             </div>
@@ -85,7 +85,7 @@ export default function Detail() {
                 name="content"
                 required rows="8"
                 class="form-control"
-                value={formData.content}
+                value={'formData.content'}
                 onChange={(e) => this.onInputChange(e, 'content')}
               />
             </div>
@@ -100,8 +100,8 @@ export default function Detail() {
       </div>
 
       <div id="comments-list" class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12"> */}
-      {/* {commentData && commentData.map((e, i) => (
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          {/* {commentData && commentData.map((e, i) => (
             <div class="comment-item" key={i}>
               <ul>
                 <li><b>{e && e.name}</b></li>
@@ -112,9 +112,9 @@ export default function Detail() {
               </ul>
             </div>
           ))} */}
-      {/* 
+
         </div>
-      </div> */}
+      </div>
     </div>
   )
 }
