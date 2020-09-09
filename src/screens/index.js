@@ -12,6 +12,7 @@ import Sidebar from './layout/sidebar'
 import Product from './product'
 import Footer from './layout/footer'
 import Detail from './detail'
+import Category from './category'
 
 
 export default function AppContainer() {
@@ -27,6 +28,7 @@ export default function AppContainer() {
               <Switch>
                 <Route exact path="/" component={Product} />
                 <Route path="/product/:productId" component={Detail} />
+                <Route path="/category/:categoryId" component={Category} />
               </Switch>
             </div>
             <Sidebar />

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { getCategory } from '../services/Api'
 export default function Menu() {
   const [categories, setCategory] = useState([]);
@@ -17,7 +18,7 @@ export default function Menu() {
           <div id="menu" className="collapse navbar-collapse">
             <ul>
               {categories.map(el => (
-                <li key={el._id} className="menu-item"><a href="#">{el.name}</a></li>
+                <li key={el._id} className="menu-item"><Link to={`/category/${el._id}`}>{el.name}</Link></li>
               ))}
             </ul>
           </div>

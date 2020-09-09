@@ -6,7 +6,7 @@ import { processImage } from './utils';
 export default function Detail() {
   const [detail, setDetail] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
-
+  const isStock = detail.is_stock ? 'Còn hàng' : 'Hết hàng'
   const params = useParams()
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export default function Detail() {
             <li><span>Khuyến Mại:</span> {detail && detail.accessories}</li>
             <li id="price">Giá Bán (chưa bao gồm VAT)</li>
             <li id="price-number">{Intl.NumberFormat('vn-VN').format(detail && detail.price)}đ</li>
-            {/* <li id="status">{isStock}</li> */}
+            <li id="status">Trạng thái: {isStock}</li>
           </ul>
           <div id="add-cart">
             <a href="#" onClick={() => { }}>
