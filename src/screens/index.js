@@ -14,6 +14,7 @@ import Footer from './layout/footer'
 import Detail from './detail'
 import Category from './category'
 import Search from './search'
+import Cart from './cart'
 
 
 export default function AppContainer() {
@@ -31,6 +32,7 @@ export default function AppContainer() {
                 <Route path="/product/:productId" component={Detail} />
                 <Route path="/category/:categoryId" component={Category} />
                 <Route path="/search" component={Search} />
+                <Route path="/cart" component={Cart} />
               </Switch>
             </div>
             <Sidebar />

@@ -1,17 +1,14 @@
-import {
-  ADD_PERSON,
-  REMOVE_PERSON
-} from './actionTypes'
+import * as ActionTypes from './actionTypes'
 
-export const addPerson = (person) => {
+export const addCart = (product) => {
   return {
-    type: ADD_PERSON,
-    person: person
+    type: ActionTypes.ADD_CART,
+    product
   }
 }
-export const removePerson = (person) => {
-  return {
-    type: REMOVE_PERSON,
-    person
-  }
-}
+// export const removePerson = (person) => {
+//   return {
+//     type: REMOVE_PERSON,
+//     person
+//   }
+// }

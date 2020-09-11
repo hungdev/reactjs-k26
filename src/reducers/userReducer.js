@@ -1,20 +1,19 @@
 // reducers/peopleReducer.js
-import { ADD_PERSON, REMOVE_PERSON } from '../actions/actionTypes';
-
+import * as ActionTypes from '../actions/actionTypes';
 const initialState = {
-  people: [{ name: 'Chris' }]
+  products: []
 }
 
 export default function peopleReducer(state = initialState, action) {
   switch (action.type) {
-    case ADD_PERSON:
+    case ActionTypes.ADD_CART:
       return {
-        people: [...state.people, action.person],
+        products: [...state.products, action.product],
       };
-    case REMOVE_PERSON:
-      return {
-        people: state.people.filter(p => p.name !== action.person.name),
-      };
+    // case REMOVE_PERSON:
+    //   return {
+    //     people: state.people.filter(p => p.name !== action.person.name),
+    //   };
     default:
       return state;
   }

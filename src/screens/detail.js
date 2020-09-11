@@ -3,8 +3,11 @@ import { getDetailProducts, getComments, postComments } from './services/Api'
 import { useParams } from 'react-router-dom'
 import { processImage } from './utils';
 import moment from 'moment'
+import { useSelector, useDispatch } from 'react-redux';
+import { addCart } from '../actions/cartAction'
 
 export default function Detail() {
+  const dispatch = useDispatch()
   const [detail, setDetail] = useState([]);
   const [formData, setFormData] = useState({});
   const [comments, setComments] = useState([]);
@@ -51,6 +54,11 @@ export default function Detail() {
   }
 
 
+  const onAddCart = () => {
+    // dispatch({type: 'ADD_CART', product})
+    dispatch(addCart({ ...detail, quantity: 1 }))
+  }
+
   return (
     <div id="product">
       <div id="product-head" class="row">
@@ -69,7 +77,7 @@ export default function Detail() {
             <li id="status">Trạng thái: {isStock}</li>
           </ul>
           <div id="add-cart">
-            <a href="#" onClick={() => { }}>
+            <a href="#" onClick={onAddCart}>
               Mua ngay
                 </a>
           </div>

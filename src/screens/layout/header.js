@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
-
+import { useHistory, Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux';
 export default function Header() {
+  const products = useSelector(state => state.cart.products);
   let history = useHistory()
   const [query, setQuery] = useState('')
 
@@ -39,7 +40,7 @@ export default function Header() {
             </form>
           </div>
           <div id="cart" className="col-lg-3 col-md-3 col-sm-12">
-            <a className="mt-4 mr-2" href="#">giỏ hàng</a><span className="mt-3">8</span>
+            <Link className="mt-4 mr-2" to='/cart'>giỏ hàng</Link><span className="mt-3">{products.length}</span>
           </div>
         </div>
       </div>
