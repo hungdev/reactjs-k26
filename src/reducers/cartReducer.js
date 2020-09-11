@@ -19,17 +19,18 @@ export default function cartReducer(state = initialState, action) {
         products: isExist ? data : [...state.products, action.product],
       };
     case ActionTypes.ADD_CART:
-      console.log('11')
+      // kiểm tra xem sản phẩm đó đã có trong list cart chưa
       const isExistAddNew = state.products.find(el => el._id === action.product._id)
-      console.log('isExistAddNew', isExistAddNew)
+      // nếu có rồi thì tăng số quantity (số lượng) lên, dùng map để lặp qua các sản phầm,
+      // nếu sản phẩm đó trùng với sản phẩm gửi lên thì tăng quantity
       const dataAddNew = state.products.map(e => {
         if (e._id === action.product._id) {
-          console.log('222')
           return ({ ...e, quantity: Number(e.quantity) + 1 })
         }
         return e
       })
-      console.log('dataAddNew', dataAddNew)
+      // trả về store, nếu có sản phẩm trong list cart thì trả về cái đã đc tăng quantity
+      // còn không thì thêm mới
       return {
         products: isExistAddNew ? dataAddNew : [...state.products, action.product],
       };
