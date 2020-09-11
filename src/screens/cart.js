@@ -1,16 +1,23 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { processImage } from './utils';
-import { addCart } from '../actions/cartAction'
+import { addCart, changeQuantity, removeProduct } from '../actions/cartAction'
 
 export default function Cart() {
   const dispatch = useDispatch()
   const products = useSelector(state => state.cart.products);
 
+  const total = products.reduce((acc, curValue) => {
+    return acc + (curValue.price * curValue.quantity)
+  }, 0)
   const onChangeQuantity = (product) => (ev) => {
-    dispatch(addCart({ ...product, quantity: ev.target.value }))
+    dispatch(changeQuantity({ ...product, quantity: ev.target.value }))
     // console.log('product', product)
     // console.log('ev', ev.target.value)
+  }
+
+  const onRemoveProduct = (el) => (event) => {
+    dispatch(removeProduct(el))
   }
 
   return (
@@ -38,9 +45,9 @@ export default function Cart() {
                 />
               </div>
               <div class="cart-price col-lg-3 col-md-3 col-sm-12">
-                {/* <b>{Intl.NumberFormat('vn-VN').format((el.price * el.quantity))}đ</b> */}
+                <b>{Intl.NumberFormat('vn-VN').format((el.price * el.quantity))}đ</b>
                 <div
-                  // onClick={() => dispatchRemoveProduct(el)}
+                  onClick={onRemoveProduct(el)}
                   className='btn'>
                   <a>Xóa</a>
                 </div>
@@ -56,7 +63,9 @@ export default function Cart() {
               > Xóa hết giỏ hàng</button>
             </div>
             <div class="cart-total col-lg-2 col-md-2 col-sm-12"><b>Tổng cộng:</b></div>
-            {/* <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>{Intl.NumberFormat('vn-VN').format(totalPrice)}đ</b></div> */}
+            <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>
+              {Intl.NumberFormat('vn-VN').format(total)}đ
+            </b></div>
           </div>
         </form>
 

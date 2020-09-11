@@ -6,9 +6,15 @@ export const addCart = (product) => {
     product
   }
 }
-// export const removePerson = (person) => {
-//   return {
-//     type: REMOVE_PERSON,
-//     person
-//   }
-// }
+export const changeQuantity = (product) => {
+  return {
+    type: ActionTypes.CHANGE_QUANTITY,
+    product
+  }
+}
+export const removeProduct = (product) => {
+  return {
+    type: ActionTypes.REMOVE_PRODUCT,
+    product
+  }
+}
