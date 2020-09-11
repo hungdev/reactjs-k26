@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { getDetailProducts } from './services/Api'
+import { getDetailProducts, getComments, postComments } from './services/Api'
 import { useParams } from 'react-router-dom'
 import { processImage } from './utils';
+import moment from 'moment'
 
 export default function Detail() {
   const [detail, setDetail] = useState([]);
+  const [formData, setFormData] = useState({});
+  const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
+  const [isPostOK, setIsPostOK] = useState(false)
   const isStock = detail.is_stock ? 'Còn hàng' : 'Hết hàng'
   const params = useParams()
 
@@ -14,6 +18,7 @@ export default function Detail() {
       console.log('params.productId', params.productId)
       const result = await getDetailProducts(params.productId);
       setDetail(result.data.data)
+      setIsPostOK(false)
       // setIsLoading(true)
       // console.log('result', result)
       // setIsLoading(false)
@@ -21,6 +26,30 @@ export default function Detail() {
 
     fetchData();
   }, [params.productId]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const result = await getComments(params.productId);
+      setComments(result.data.data)
+    }
+
+    fetchData();
+  }, [params.productId, isPostOK]);
+
+
+  const onInputChange = (ev) => {
+    ev.persist()
+    setFormData(prev => ({ ...prev, [ev.target.name]: ev.target.value }))
+  }
+
+  const onSubmit = async () => {
+    const result = await postComments({ ...formData, productId: params.productId })
+    if (result.data.result === 'ok') {
+      setIsPostOK(true)
+    }
+    console.log('result', result)
+  }
+
 
   return (
     <div id="product">
@@ -34,7 +63,7 @@ export default function Detail() {
             <li><span>Bảo hành:</span> 12 Tháng</li>
             <li><span>Đi kèm:</span> {detail && detail.accessories}</li>
             <li><span>Tình trạng:</span> {detail && detail.status}</li>
-            <li><span>Khuyến Mại:</span> {detail && detail.accessories}</li>
+            <li><span>Khuyến Mại:</span> {detail && detail.promotion}</li>
             <li id="price">Giá Bán (chưa bao gồm VAT)</li>
             <li id="price-number">{Intl.NumberFormat('vn-VN').format(detail && detail.price)}đ</li>
             <li id="status">Trạng thái: {isStock}</li>
@@ -65,8 +94,8 @@ export default function Detail() {
                 name="name"
                 required type="text"
                 class="form-control"
-                value={'formData.name'}
-                onChange={(e) => this.onInputChange(e, 'name')}
+                value={formData.name}
+                onChange={(e) => onInputChange(e)}
               />
             </div>
             <div class="form-group">
@@ -75,8 +104,8 @@ export default function Detail() {
                 name="email"
                 required type="email"
                 class="form-control"
-                value={'formData.email'}
-                onChange={(e) => this.onInputChange(e, 'email')}
+                value={formData.email}
+                onChange={(e) => onInputChange(e)}
               />
             </div>
             <div class="form-group">
@@ -85,15 +114,15 @@ export default function Detail() {
                 name="content"
                 required rows="8"
                 class="form-control"
-                value={'formData.content'}
-                onChange={(e) => this.onInputChange(e, 'content')}
+                value={formData.content}
+                onChange={(e) => onInputChange(e)}
               />
             </div>
             <button
               type="submit"
               name="sbm"
               class="btn btn-primary"
-              onClick={() => this.onSubmit()}
+              onClick={onSubmit}
             >Gửi</button>
           </form>
         </div>
@@ -101,7 +130,7 @@ export default function Detail() {
 
       <div id="comments-list" class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">
-          {/* {commentData && commentData.map((e, i) => (
+          {comments && comments.map((e, i) => (
             <div class="comment-item" key={i}>
               <ul>
                 <li><b>{e && e.name}</b></li>
@@ -111,7 +140,7 @@ export default function Detail() {
                 </li>
               </ul>
             </div>
-          ))} */}
+          ))}
 
         </div>
       </div>

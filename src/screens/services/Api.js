@@ -21,3 +21,11 @@ export const getDetailProducts = (productId) => api.get(`/product/${productId}`)
 export function getCategory() {
   return api.get('/get-categories')
 }
+
+export function getComments(productId) {
+  return api.get(`/get-product-comments/${productId}`)
+}
+
+export function postComments(params) {
+  return api.post(`/create-comment/`, params)
+}
