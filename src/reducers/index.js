@@ -6,7 +6,7 @@ import user from './userReducer'
 // gom các reducer lại
 const rootReducer = combineReducers({
   cart,
-  user
+  // user
   // nếu có reducer khác thì add thêm ở đây
 })
 

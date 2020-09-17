@@ -17,6 +17,7 @@ export default function cartReducer(state = initialState, action) {
         return e
       })
       return {
+        ...state,
         products: isExist ? data : [...state.products, action.product],
       };
     case ActionTypes.ADD_CART:
@@ -33,20 +34,22 @@ export default function cartReducer(state = initialState, action) {
       // trả về store, nếu có sản phẩm trong list cart thì trả về cái đã đc tăng quantity
       // còn không thì thêm mới
       return {
+        ...state,
         products: isExistAddNew ? dataAddNew : [...state.products, action.product],
       };
     case ActionTypes.REMOVE_PRODUCT:
       return {
+        ...state,
         products: state.products.filter(p => p._id !== action.product._id),
       };
 
     case ActionTypes.ADD_WISH_LIST:
-      console.log('action.product', action.product)
       // kiem tra no co trong list chua
       const isExistWl = state.wishlist.find(el => el._id === action.product._id)
       // neu co se tra ve item, ko co se tra ve undefined
 
       return {
+        ...state,
         wishlist: isExistWl ? state.wishlist.filter(e => e._id !== action.product._id)
           : [...state.wishlist, action.product]
       };
