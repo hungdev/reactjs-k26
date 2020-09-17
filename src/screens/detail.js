@@ -8,12 +8,12 @@ import { addCart } from '../actions/cartAction'
 
 export default function Detail() {
   const dispatch = useDispatch()
-  const [detail, setDetail] = useState([]);
+  const [detail, setDetail] = useState(null);
   const [formData, setFormData] = useState({});
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
   const [isPostOK, setIsPostOK] = useState(false)
-  const isStock = detail.is_stock ? 'Còn hàng' : 'Hết hàng'
+  const isStock = detail?.is_stock ? 'Còn hàng' : 'Hết hàng'
   const params = useParams()
 
   useEffect(() => {
@@ -29,6 +29,11 @@ export default function Detail() {
 
     fetchData();
   }, [params.productId]);
+
+  useEffect(() => {
+    // BTVN: thêm item hiện tại vào redux
+    // dispatch(addPreview(detail))
+  }, [detail]);
 
   useEffect(() => {
     async function fetchData() {
@@ -63,10 +68,10 @@ export default function Detail() {
     <div id="product">
       <div id="product-head" class="row">
         <div id="product-img" class="col-lg-6 col-md-6 col-sm-12">
-          <img src={processImage(detail.image)} alt='product' />
+          <img src={processImage(detail?.image)} alt='product' />
         </div>
         <div id="product-details" class="col-lg-6 col-md-6 col-sm-12">
-          <h1>{detail && detail.name}</h1>
+          <h1>{detail?.name}</h1>
           <ul>
             <li><span>Bảo hành:</span> 12 Tháng</li>
             <li><span>Đi kèm:</span> {detail && detail.accessories}</li>

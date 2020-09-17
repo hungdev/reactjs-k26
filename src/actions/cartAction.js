@@ -18,3 +18,9 @@ export const removeProduct = (product) => {
     product
   }
 }
+export const addWishList = (product) => {
+  return {
+    type: ActionTypes.ADD_WISH_LIST,
+    product
+  }
+}

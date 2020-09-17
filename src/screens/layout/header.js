@@ -3,6 +3,8 @@ import { useHistory, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 export default function Header() {
   const products = useSelector(state => state.cart.products);
+  const wishlistProduct = useSelector(state => state.cart.wishlist);
+  console.log('wishlistProduct', wishlistProduct)
   let history = useHistory()
   const [query, setQuery] = useState('')
 
@@ -40,7 +42,8 @@ export default function Header() {
             </form>
           </div>
           <div id="cart" className="col-lg-3 col-md-3 col-sm-12">
-            <Link className="mt-4 mr-2" to='/cart'>giỏ hàng</Link><span className="mt-3">{products.length}</span>
+            <Link className="mt-4 mr-2" to='/wishlist'>Yêu thích</Link><span className="mt-3 mr-4">{wishlistProduct?.length}</span>
+            <Link className="mt-4 mr-2" to='/cart'>giỏ hàng</Link><span className="mt-3">{products?.length}</span>
           </div>
         </div>
       </div>

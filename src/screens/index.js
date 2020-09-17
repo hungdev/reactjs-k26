@@ -15,6 +15,7 @@ import Detail from './detail'
 import Category from './category'
 import Search from './search'
 import Cart from './cart'
+import Wishlist from './wishlist'
 
 
 export default function AppContainer() {
@@ -33,6 +34,7 @@ export default function AppContainer() {
                 <Route path="/category/:categoryId" component={Category} />
                 <Route path="/search" component={Search} />
                 <Route path="/cart" component={Cart} />
+                <Route path="/wishlist" component={Wishlist} />
               </Switch>
             </div>
             <Sidebar />

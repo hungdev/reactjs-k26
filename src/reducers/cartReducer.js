@@ -2,7 +2,8 @@
 import * as ActionTypes from '../actions/actionTypes';
 const initialState = {
   // products: [{name: 'ip7', quantity: 0, id: 1223}]
-  products: []
+  products: [],
+  wishlist: []
 }
 
 export default function cartReducer(state = initialState, action) {
@@ -38,6 +39,18 @@ export default function cartReducer(state = initialState, action) {
       return {
         products: state.products.filter(p => p._id !== action.product._id),
       };
+
+    case ActionTypes.ADD_WISH_LIST:
+      console.log('action.product', action.product)
+      // kiem tra no co trong list chua
+      const isExistWl = state.wishlist.find(el => el._id === action.product._id)
+      // neu co se tra ve item, ko co se tra ve undefined
+
+      return {
+        wishlist: isExistWl ? state.wishlist.filter(e => e._id !== action.product._id)
+          : [...state.wishlist, action.product]
+      };
+    //  wishlist: isExistWl ? state.wishlist : [...state.wishlist, action.product]
     default:
       return state;
   }

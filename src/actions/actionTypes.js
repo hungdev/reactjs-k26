@@ -1,3 +1,4 @@
 export const CHANGE_QUANTITY = 'CHANGE_QUANTITY'
 export const ADD_CART = 'ADD_CART'
 export const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
+export const ADD_WISH_LIST = 'ADD_WISH_LIST'

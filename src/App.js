@@ -22,6 +22,7 @@ const persistConfig = {
   // nó sẽ ko lưu
   blacklist: [
     // 'cartReducer'
+    // 'cart'
   ]
 }
 
