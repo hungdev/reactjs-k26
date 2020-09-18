@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Item from './components/item'
 import { getProducts } from './services/Api'
+import Spinner from './components/spinner';
+
 function Product() {
   const [featureProduct, setFeatureProduct] = useState([]);
   const [newProduct, setNewProduct] = useState([]);
@@ -8,8 +10,9 @@ function Product() {
 
   useEffect(() => {
     async function fetchData() {
-      // const result = await getProducts({ limit: 6 });
       setIsLoading(true)
+      // const featurePro = await getProducts({ limit: 6, isFeatured: true });
+      // const newProduct = await getProducts({ limit: 6, isFeatured: false });
       const [featurePro, newProduct] = await Promise.all(
         [getProducts({ limit: 6, isFeatured: true }),
         getProducts({ limit: 6, isFeatured: false })])
@@ -23,6 +26,7 @@ function Product() {
 
   return (
     <>
+      <Spinner loading={isLoading} />
       <div class="products">
         <h3>Sản phẩm nổi bật</h3>
         <div class="product-list card-deck">
