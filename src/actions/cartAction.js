@@ -24,3 +24,10 @@ export const addWishList = (product) => {
     product
   }
 }
+
+export const addPreviewList = (product) => {
+  return {
+    type: ActionTypes.ADD_PREVIEW,
+    product: product
+  }
+}

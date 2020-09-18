@@ -4,7 +4,8 @@ import { useParams } from 'react-router-dom'
 import { processImage } from './utils';
 import moment from 'moment'
 import { useSelector, useDispatch } from 'react-redux';
-import { addCart } from '../actions/cartAction'
+import { addCart, addPreviewList } from '../actions/cartAction'
+import Item from './components/item';
 
 export default function Detail() {
   const dispatch = useDispatch()
@@ -16,11 +17,15 @@ export default function Detail() {
   const isStock = detail?.is_stock ? 'Còn hàng' : 'Hết hàng'
   const params = useParams()
 
+  const previewList = useSelector(state => state.cart.previewList);
+
   useEffect(() => {
     async function fetchData() {
       console.log('params.productId', params.productId)
       const result = await getDetailProducts(params.productId);
       setDetail(result.data.data)
+      // dispatch({type: 'ADD_PREVIEW', product: result.data.data})
+      dispatch(addPreviewList(result.data.data))
       setIsPostOK(false)
       // setIsLoading(true)
       // console.log('result', result)
@@ -28,12 +33,7 @@ export default function Detail() {
     }
 
     fetchData();
-  }, [params.productId]);
-
-  useEffect(() => {
-    // BTVN: thêm item hiện tại vào redux
-    // dispatch(addPreview(detail))
-  }, [detail]);
+  }, [dispatch, params.productId]);
 
   useEffect(() => {
     async function fetchData() {
@@ -140,6 +140,8 @@ export default function Detail() {
           </form>
         </div>
       </div>
+
+      <div>{previewList.map(e => <Item key={e._id} data={e} />)}</div>
 
       <div id="comments-list" class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">

@@ -3,7 +3,8 @@ import * as ActionTypes from '../actions/actionTypes';
 const initialState = {
   // products: [{name: 'ip7', quantity: 0, id: 1223}]
   products: [],
-  wishlist: []
+  wishlist: [],
+  previewList: []
 }
 
 export default function cartReducer(state = initialState, action) {
@@ -54,6 +55,14 @@ export default function cartReducer(state = initialState, action) {
           : [...state.wishlist, action.product]
       };
     //  wishlist: isExistWl ? state.wishlist : [...state.wishlist, action.product]
+    // case 'ADD_PREVIEW':
+    case ActionTypes.ADD_PREVIEW:
+      // kiem tra xem no co namw= trong list da add ko
+      const isExistPrev = state.previewList.find(el => el._id === action.product._id)
+      return {
+        ...state,
+        previewList: isExistPrev ? [...state.previewList] : [action.product, ...state.previewList]
+      }
     default:
       return state;
   }

@@ -17,3 +17,10 @@ sau đó chạy
 ```
 npm start
 ```
+
+
+b1: tao action type
+
+b2: tao action
+
+b3: tao reducer
