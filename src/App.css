@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+.error-message {
+  color: #bf1650 !important;
+}
+
+.error-message ::before {
+  display: inline;
+  content: "⚠ ";
+}

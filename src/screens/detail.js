@@ -3,6 +3,7 @@ import { getDetailProducts, getComments, postComments } from './services/Api'
 import { useParams } from 'react-router-dom'
 import { processImage } from './utils';
 import moment from 'moment'
+import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from 'react-redux';
 import { addCart, addPreviewList } from '../actions/cartAction'
 import Item from './components/item';
@@ -21,6 +22,13 @@ export default function Detail() {
   const [activePage, setActivePage] = useState(1)
   const [totalPage, setTotalPage] = useState(0)
 
+  const { register, handleSubmit, errors } = useForm();
+
+  const initValue = {
+    name: '',
+    email: '',
+    content: ''
+  }
 
   const isStock = detail?.is_stock ? 'Còn hàng' : 'Hết hàng'
   const params = useParams()
@@ -63,12 +71,13 @@ export default function Detail() {
     setFormData(prev => ({ ...prev, [ev.target.name]: ev.target.value }))
   }
 
-  const onSubmit = async () => {
-    const result = await postComments({ ...formData, productId: params.productId })
+  const onSubmit = async (data) => {
+    // console.log('zzzzzz', data)
+    const result = await postComments({ ...data, productId: params.productId })
     if (result.data.result === 'ok') {
       setIsPostOK(true)
     }
-    console.log('result', result)
+    // console.log('result', result)
   }
 
 
@@ -121,42 +130,65 @@ export default function Detail() {
         <div id="comment" class="row">
           <div class="col-lg-12 col-md-12 col-sm-12">
             <h3>Bình luận sản phẩm</h3>
-            <form method="post" onSubmit={(e) => { e.preventDefault() }}>
+            <form
+              // method="post"
+              // onSubmit={(e) => { e.preventDefault() }}
+              onSubmit={handleSubmit(onSubmit)}
+              noValidate
+            >
               <div class="form-group">
                 <label>Tên:</label>
                 <input
+                  defaultValue={initValue.name}
                   name="name"
-                  required type="text"
+                  required
+                  type="text"
                   class="form-control"
-                  value={formData.name}
-                  onChange={(e) => onInputChange(e)}
+                  // value={formData.name}
+                  // onChange={(e) => onInputChange(e)}
+                  ref={register({
+                    required: true, maxLength: 100
+                  })}
                 />
+                {errors.name && <p className='error-message'>Your name is required</p>}
               </div>
               <div class="form-group">
                 <label>Email:</label>
                 <input
                   name="email"
-                  required type="email"
+                  defaultValue={initValue.name}
+                  required
+                  type="email"
                   class="form-control"
-                  value={formData.email}
-                  onChange={(e) => onInputChange(e)}
+                  // value={formData.email}
+                  // onChange={(e) => onInputChange(e)}
+                  ref={register({
+                    required: true,
+                    pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                  })}
                 />
+                {errors.email && <p className='error-message'>Email is not valid</p>}
               </div>
               <div class="form-group">
                 <label>Nội dung:</label>
                 <textarea
                   name="content"
+                  defaultValue={initValue.content}
                   required rows="8"
                   class="form-control"
-                  value={formData.content}
-                  onChange={(e) => onInputChange(e)}
+                  // value={formData.content}
+                  // onChange={(e) => onInputChange(e)}
+                  ref={register({
+                    required: true, maxLength: 255
+                  })}
                 />
+                {errors.content && <p className='error-message'>Content is required</p>}
               </div>
               <button
                 type="submit"
                 name="sbm"
                 class="btn btn-primary"
-                onClick={onSubmit}
+              // onClick={onSubmit}
               >Gửi</button>
             </form>
           </div>
