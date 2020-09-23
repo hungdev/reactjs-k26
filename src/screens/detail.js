@@ -183,7 +183,7 @@ export default function Detail() {
         <div class="row justify-content-center mt-2">
           <Pagination
             activePage={activePage}
-            itemsCountPerPage={10}
+            itemsCountPerPage={5}
             totalItemsCount={totalPage}
             pageRangeDisplayed={5}
             onChange={handlePageChange}
