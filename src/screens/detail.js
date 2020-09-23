@@ -7,7 +7,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addCart, addPreviewList } from '../actions/cartAction'
 import Item from './components/item';
 import Spinner from './components/spinner';
+import Pagination from "react-js-pagination";
 
+const initPagination = { limit: 5, skip: 0 }
 export default function Detail() {
   const dispatch = useDispatch()
   const [detail, setDetail] = useState(null);
@@ -15,6 +17,11 @@ export default function Detail() {
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
   const [isPostOK, setIsPostOK] = useState(false)
+  const [pagination, setPagination] = useState(initPagination)
+  const [activePage, setActivePage] = useState(1)
+  const [totalPage, setTotalPage] = useState(0)
+
+
   const isStock = detail?.is_stock ? 'Còn hàng' : 'Hết hàng'
   const params = useParams()
 
@@ -41,12 +48,14 @@ export default function Detail() {
 
   useEffect(() => {
     async function fetchData() {
-      const result = await getComments(params.productId);
+      const result = await getComments(params.productId, pagination);
+      console.log('result', result)
       setComments(result.data.data)
+      setTotalPage(result.data.total)
     }
 
     fetchData();
-  }, [params.productId, isPostOK]);
+  }, [params.productId, isPostOK, pagination]);
 
 
   const onInputChange = (ev) => {
@@ -66,6 +75,12 @@ export default function Detail() {
   const onAddCart = () => {
     // dispatch({type: 'ADD_CART', product})
     dispatch(addCart({ ...detail, quantity: 1 }))
+  }
+
+  const handlePageChange = (pageNumber) => {
+    console.log('pageNumber', pageNumber)
+    setActivePage(pageNumber)
+    setPagination(prev => ({ ...prev, skip: pageNumber * 5 }))
   }
 
   return (
@@ -147,7 +162,7 @@ export default function Detail() {
           </div>
         </div>
 
-        <div>{slice3.map(e => <Item key={e._id} data={e} />)}</div>
+        {/* <div>{slice3.map(e => <Item key={e._id} data={e} />)}</div> */}
 
         <div id="comments-list" class="row">
           <div class="col-lg-12 col-md-12 col-sm-12">
@@ -164,6 +179,17 @@ export default function Detail() {
             ))}
 
           </div>
+        </div>
+        <div class="row justify-content-center mt-2">
+          <Pagination
+            activePage={activePage}
+            itemsCountPerPage={10}
+            totalItemsCount={totalPage}
+            pageRangeDisplayed={5}
+            onChange={handlePageChange}
+            itemClass="page-item"
+            linkClass="page-link"
+          />
         </div>
       </div> : null}
     </>

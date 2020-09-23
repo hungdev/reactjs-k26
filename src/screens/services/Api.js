@@ -22,8 +22,8 @@ export function getCategory() {
   return api.get('/get-categories')
 }
 
-export function getComments(productId) {
-  return api.get(`/get-product-comments/${productId}`)
+export function getComments(productId, params) {
+  return api.get(`/get-product-comments/${productId}`, { params })
 }
 
 export function postComments(params) {
